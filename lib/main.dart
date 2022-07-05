@@ -12,11 +12,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
       theme: Theme.of(context).copyWith(
+          scaffoldBackgroundColor: appBackgroundColor,
           textTheme: Theme.of(context)
               .textTheme
               .apply(bodyColor: appTextColor, displayColor: appTextColor),
           appBarTheme: const AppBarTheme(
-              backgroundColor: Colors.white,
+              backgroundColor: appBackgroundColor,
               elevation: 0,
               centerTitle: true,
               foregroundColor: Colors.black)),

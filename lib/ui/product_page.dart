@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/constants.dart';
 import 'package:flutter_ecommerce/store/ecommerce_store.dart';
@@ -23,7 +21,7 @@ class _ProductPageState extends State<ProductPage>
   late TabController _tabBarController;
   @override
   void initState() {
-    _tabBarController = TabController(vsync: this, length: 4);
+    _tabBarController = TabController(initialIndex: 3, vsync: this, length: 4);
     super.initState();
   }
 
@@ -56,37 +54,38 @@ class _ProductPageState extends State<ProductPage>
                           Text(store.products[widget.id].name,
                               style: const TextStyle(fontSize: 36))
                         ])),
-                Container(
-                  height: 500,
-                  child: Row(
-                    children: [
+                SizedBox(
+                    height: 500,
+                    child: Row(children: [
                       RotatedBox(
-                        quarterTurns: 3,
-                        child: TabBar(
-                            unselectedLabelColor: appTextColor,
-                            labelColor: Colors.black,
-                            indicator: BoxDecoration(color: appBarColor),
-                            controller: _tabBarController,
-                            tabs: const [
-                              Tab(text: 'About'),
-                              Tab(text: 'How to Use'),
-                              Tab(text: 'Reviews'),
-                              Tab(text: 'Benefits')
-                            ]),
-                      ),
+                          quarterTurns: 3,
+                          child: TabBar(
+                              unselectedLabelColor: appTextColor,
+                              labelColor: Colors.black,
+                              indicatorWeight: 10,
+                              indicatorSize: TabBarIndicatorSize.label,
+                              indicator: const UnderlineTabIndicator(
+                                  borderSide: BorderSide(
+                                      color: appBarColor, width: 8.0),
+                                  insets: EdgeInsets.fromLTRB(
+                                      50.0, 0.0, 50.0, 50.0)),
+                              controller: _tabBarController,
+                              tabs: const [
+                                Tab(text: 'Benefits'),
+                                Tab(text: 'Reviews'),
+                                Tab(text: 'How to Use'),
+                                Tab(text: 'About')
+                              ])),
                       Flexible(
-                        child: TabBarView(
-                            controller: _tabBarController,
-                            children: [
-                              Container(),
-                              Container(),
-                              Container(),
-                              Container(),
-                            ]),
-                      )
-                    ],
-                  ),
-                )
+                          child: TabBarView(
+                              controller: _tabBarController,
+                              children: [
+                            Image.asset(store.products[widget.id].imgString),
+                            Image.asset(store.products[widget.id].imgString),
+                            Image.asset(store.products[widget.id].imgString),
+                            Image.asset(store.products[widget.id].imgString),
+                          ]))
+                    ]))
               ]))),
           Container(
               decoration: const BoxDecoration(color: Colors.white, boxShadow: [

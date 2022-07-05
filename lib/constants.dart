@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:line_icons/line_icons.dart';
 
 const Color appBarColor = Color(0xff7dbea2);
+const Color appBackgroundColor = Color(0xfff7f7f6);
 const Color categoryDotColor = Color(0xff98cab5);
 const Color appTextColor = Color(0xff6b6c8a);
 const Color exploreProductsButtonColor = Color(0xffb0d5c6);

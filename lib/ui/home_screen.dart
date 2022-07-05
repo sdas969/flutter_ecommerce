@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/constants.dart';
 import 'package:flutter_ecommerce/store/ecommerce_store.dart';
+import 'package:flutter_ecommerce/ui/cart_page.dart';
 import 'package:flutter_ecommerce/widgets/category_item.dart';
 import 'package:flutter_ecommerce/widgets/product_item.dart';
 import 'package:flutter_ecommerce/widgets/trending_product_item.dart';
@@ -21,7 +22,10 @@ class HomeScreen extends StatelessWidget {
                 onPressed: () {}, icon: const Icon(Icons.grid_view_rounded)),
             actions: [
               IconButton(
-                  onPressed: () {},
+                  onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const CartPage())),
                   icon: const Icon(Icons.shopping_bag_outlined))
             ]),
         body: SingleChildScrollView(

@@ -10,6 +10,10 @@ class ProductPrice extends StatelessWidget {
   final Product product;
 
   @override
-  Widget build(BuildContext context) => Text('£ ${product.price}',
-      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold));
+  Widget build(BuildContext context) =>
+      Wrap(crossAxisAlignment: WrapCrossAlignment.end, children: [
+        const Text('£ ', style: TextStyle(fontWeight: FontWeight.bold)),
+        Text(product.price.toString(),
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold))
+      ]);
 }
