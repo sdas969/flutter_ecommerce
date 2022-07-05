@@ -18,9 +18,7 @@ class FavoritesButton extends StatelessWidget {
       mutations: const {ChangeFavoriteStatus},
       builder: (context, _, __) => IconButton(
           onPressed: () => ChangeFavoriteStatus(id: id),
-          icon: Align(
-              alignment: Alignment.topRight,
-              child: Icon(
-                  product.isFavourite ? Icons.favorite : Icons.favorite_outline,
-                  color: product.isFavourite ? Colors.red : null))));
+          icon: Icon(
+              product.isFavourite ? Icons.favorite : Icons.favorite_outline,
+              color: product.isFavourite ? Colors.red : null)));
 }

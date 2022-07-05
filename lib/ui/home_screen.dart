@@ -14,6 +14,8 @@ class HomeScreen extends StatelessWidget {
     EcommerceStore store = VxState.store as EcommerceStore;
     return Scaffold(
         appBar: AppBar(
+            backgroundColor: appBarColor,
+            foregroundColor: Colors.white,
             title: const Text('STORE'),
             leading: IconButton(
                 onPressed: () {}, icon: const Icon(Icons.grid_view_rounded)),
