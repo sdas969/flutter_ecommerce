@@ -15,19 +15,24 @@ class CartPage extends StatelessWidget {
             title: const Text('My Cart'),
             leading: IconButton(
                 onPressed: () {}, icon: const Icon(Icons.grid_view_rounded))),
-        body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          VxBuilder(
-              mutations: const {IncrementProductCount, DecrementProductCount},
-              builder: (context, _, __) => Expanded(
+        body: VxBuilder(
+            mutations: const {IncrementProductCount, DecrementProductCount},
+            builder: (context, _, __) {
+              List<Widget> cartItems = store.products
+                  .where((product) => product.quantity > 0)
+                  .map((product) => Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CartItem(product: product)))
+                  .toList();
+              if (cartItems.isNotEmpty) {
+                return Column(children: [
+                  Expanded(
                       child: SingleChildScrollView(
-                          child: Column(children: [
-                    ...store.products
-                        .where((product) => product.quantity > 0)
-                        .map((product) => Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CartItem(product: product)))
-                  ])))),
-          const CheckoutButton()
-        ]));
+                          child: Column(children: cartItems))),
+                  const CheckoutButton()
+                ]);
+              }
+              return const Center(child: Text('No Cart Items'));
+            }));
   }
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce/constants.dart';
 import 'package:flutter_ecommerce/store/ecommerce_store.dart';
 import 'package:flutter_ecommerce/widgets/add_to_cart_button.dart';
 import 'package:flutter_ecommerce/widgets/category_subtitle.dart';
 import 'package:flutter_ecommerce/widgets/favorites_button.dart';
 import 'package:flutter_ecommerce/widgets/increment_decrement_counter.dart';
 import 'package:flutter_ecommerce/widgets/product_price.dart';
+import 'package:flutter_ecommerce/widgets/vertical_tab_bar.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class ProductPage extends StatefulWidget {
@@ -57,25 +57,7 @@ class _ProductPageState extends State<ProductPage>
                 SizedBox(
                     height: 500,
                     child: Row(children: [
-                      RotatedBox(
-                          quarterTurns: 3,
-                          child: TabBar(
-                              unselectedLabelColor: appTextColor,
-                              labelColor: Colors.black,
-                              indicatorWeight: 10,
-                              indicatorSize: TabBarIndicatorSize.label,
-                              indicator: const UnderlineTabIndicator(
-                                  borderSide: BorderSide(
-                                      color: appBarColor, width: 8.0),
-                                  insets: EdgeInsets.fromLTRB(
-                                      50.0, 0.0, 50.0, 50.0)),
-                              controller: _tabBarController,
-                              tabs: const [
-                                Tab(text: 'Benefits'),
-                                Tab(text: 'Reviews'),
-                                Tab(text: 'How to Use'),
-                                Tab(text: 'About')
-                              ])),
+                      VerticalTabBar(tabBarController: _tabBarController),
                       Flexible(
                           child: TabBarView(
                               controller: _tabBarController,
