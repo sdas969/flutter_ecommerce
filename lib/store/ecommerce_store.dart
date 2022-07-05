@@ -97,3 +97,11 @@ class ChangeFavoriteStatus extends VxMutation<EcommerceStore> {
   perform() =>
       store!.products[id].isFavourite = !store!.products[id].isFavourite;
 }
+
+class ChangeSeenStatus extends VxMutation<EcommerceStore> {
+  ChangeSeenStatus({required this.id});
+  final int id;
+
+  @override
+  perform() => store!.products[id].isSeen = true;
+}

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/constants.dart';
 import 'package:flutter_ecommerce/store/ecommerce_store.dart';
+import 'package:flutter_ecommerce/widgets/category_item.dart';
+import 'package:flutter_ecommerce/widgets/product_item.dart';
+import 'package:flutter_ecommerce/widgets/trending_product_item.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -24,30 +27,25 @@ class HomeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
               const Padding(
-                padding: EdgeInsets.all(16),
-                child:
-                    Text('Trending Products', style: TextStyle(fontSize: 24)),
-              ),
-              Column(
-                children: [
-                  SizedBox(
-                      height: 100,
-                      child: ListView.separated(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(width: 16),
-                          itemCount: store.products.length,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) => CircleAvatar(
-                              radius: 50,
-                              // backgroundImage: AssetImage(store.products[index].imgString),
-                              child: CircularProgressIndicator(
-                                  backgroundColor: Colors.transparent,
-                                  value:
-                                      store.products[index].isSeen ? 0 : 1)))),
-                  const SizedBox(height: 20),
-                  Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Text('Trending Products',
+                      style: TextStyle(fontSize: 24))),
+              Column(children: [
+                SizedBox(
+                    height: 100,
+                    child: ListView.separated(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(width: 16),
+                        itemCount: store.products.length,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) => VxBuilder(
+                            mutations: const {ChangeSeenStatus},
+                            builder: (context, _, __) => TrendingProductItem(
+                                product: store.products[index])))),
+                const SizedBox(height: 20),
+                Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,145 +55,33 @@ class HomeScreen extends StatelessWidget {
                           Row(children: [
                             TextButton(
                                 onPressed: () {},
-                                child: Icon(
-                                  Icons.grid_view,
-                                  color: appTextColor.withOpacity(0.25),
-                                )),
+                                child: Icon(Icons.grid_view,
+                                    color: appTextColor.withOpacity(0.25))),
                             TextButton(
                                 onPressed: () {},
                                 style: TextButton.styleFrom(
                                     backgroundColor: exploreProductsButtonColor
                                         .withOpacity(0.25)),
-                                child: const Icon(
-                                  Icons.menu,
-                                  color: exploreProductsButtonColor,
-                                )),
+                                child: const Icon(Icons.menu,
+                                    color: exploreProductsButtonColor))
                           ])
-                        ]),
-                  ),
-                  const SizedBox(height: 20),
-                  SizedBox(
-                      height: 65,
-                      child: ListView.separated(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(width: 16),
-                          itemCount: productCategoryList.length,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) => Container(
-                              decoration: BoxDecoration(
-                                  color: productCategoryList[index].isSelected
-                                      ? exploreCardSelectedColor
-                                      : null,
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                      color:
-                                          productCategoryList[index].isSelected
-                                              ? Colors.white
-                                              : Colors.grey)),
-                              child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 8.0, horizontal: 16),
-                                  child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                color:
-                                                    productCategoryList[index]
-                                                            .isSelected
-                                                        ? appBarColor
-                                                        : null),
-                                            child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Icon(
-                                                    productCategoryList[index]
-                                                        .icon,
-                                                    color: productCategoryList[
-                                                                index]
-                                                            .isSelected
-                                                        ? Colors.white
-                                                        : productCategoryList[
-                                                                index]
-                                                            .iconColor))),
-                                        const SizedBox(width: 16),
-                                        Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                  productCategoryList[index]
-                                                      .categoryName,
-                                                  style: TextStyle(
-                                                      color:
-                                                          productCategoryList[
-                                                                      index]
-                                                                  .isSelected
-                                                              ? cardTextColor
-                                                              : appTextColor,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 16)),
-                                              Text(
-                                                  productCategoryList[index]
-                                                      .items
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      color:
-                                                          productCategoryList[
-                                                                      index]
-                                                                  .isSelected
-                                                              ? cardTextColor
-                                                              : appTextColor))
-                                            ])
-                                      ]))))),
-                ],
-              ),
-              const SizedBox(height: 20),
-              ...store.products.mapIndexed((currentValue, index) => ListTile(
-                  leading: Image.asset(currentValue.imgString),
-                  title: Text(currentValue.name,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16)),
-                  isThreeLine: true,
-                  trailing: Column(children: [
-                    Expanded(
-                        child: VxBuilder(
-                            mutations: const {ChangeFavoriteStatus},
-                            builder: (context, _, __) => IconButton(
-                                onPressed: () =>
-                                    ChangeFavoriteStatus(id: index),
-                                icon: Icon(
-                                    currentValue.isFavourite
-                                        ? Icons.favorite
-                                        : Icons.favorite_outline,
-                                    color: currentValue.isFavourite
-                                        ? Colors.red
-                                        : null)))),
-                    Text('£ ${currentValue.price}')
-                  ]),
-                  subtitle: Column(children: [
-                    Padding(
-                        padding: const EdgeInsets.only(left: 5.0),
-                        child: Row(children: [
-                          const CircleAvatar(
-                              radius: 5, backgroundColor: categoryDotColor),
-                          const SizedBox(width: 8),
-                          Text(currentValue.category)
                         ])),
-                    Row(children: [
-                      const Icon(Icons.star, color: Colors.yellow),
-                      Text(currentValue.rating.toString(),
-                          style: const TextStyle(fontWeight: FontWeight.bold))
-                    ])
-                  ])))
+                const SizedBox(height: 20),
+                SizedBox(
+                    height: 65,
+                    child: ListView.separated(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(width: 16),
+                        itemCount: productCategoryList.length,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) => CategoryItem(
+                            productCategory: productCategoryList[index])))
+              ]),
+              const SizedBox(height: 20),
+              ...store.products.mapIndexed(
+                  (product, index) => ProductItem(product: product, id: index))
             ])));
   }
 }
